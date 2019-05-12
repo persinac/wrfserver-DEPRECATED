@@ -1,0 +1,46 @@
+{
+  "name": "wrfserver",
+  "version": "1.0.0",
+  "description": "Backbone API server for WRF.",
+  "main": "app.js",
+  "author": {
+    "name": "Alex Persinger",
+    "email": "apfbacc@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Mike Cokingtin",
+      "email": "mike.cokingtin@gmail.com"
+    }
+  ],
+  "bugs": "https://github.com/persinac/wrfserver/issues",
+  "homepage": "https://wrf-center.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/persinac/wrfserver.git"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "node app.js",
+    "prod": "node app.js",
+    "start-dev": "npm run dev",
+    "start": "npm run prod",
+    "unit": "",
+    "test": "",
+    "lint": "",
+    "build": "node build/build.js"
+  },
+  "dependencies": {
+    "express": "latest"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11"
+  ]
+}
