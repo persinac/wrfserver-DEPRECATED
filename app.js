@@ -2,6 +2,19 @@ const express = require('express')
 const app = express()
 const port = 2999
 
-app.get('/', (req, res) => res.send('Hello World!'))
+const mysql = require('mysql');
+// connection configurations
+const mc = mysql.createConnection({
+  host: 'localhost',
+  user: 'wrf_admin',
+  password: 'password',
+  database: 'testing'
+});
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// connect to database
+mc.connect();
+
+app.listen(port, () => console.log(`API server started on: ${port}!`))
+
+var routes = require('./app/routes/routes'); //importing route
+routes(app); //register the route

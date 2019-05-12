@@ -31,7 +31,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "mysql": "latest"
   },
   "devDependencies": {},
   "engines": {
