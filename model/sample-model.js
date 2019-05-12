@@ -11,6 +11,7 @@ SampleModel.createSampleModel = function createSampleModel(newSample, result) {
   sql.query("INSERT INTO test set ?", newSample, function (err, res) {
     if(err) {
       console.log("error: ", err);
+      console.log("stuff");
       result(err, null);
     }
     else {
