@@ -31,8 +31,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^12.0.0",
     "express": "latest",
-    "mysql": "latest"
+    "mysql": "latest",
+    "ts-lint": "^4.5.1",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
   },
   "devDependencies": {},
   "engines": {
