@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": "3306",
+  "username": "wrf_admin",
+  "password": "password",
+  "database": "wrf",
+  "entities": ["src/entity/**/*.ts"],
+  "logging": true
+}
