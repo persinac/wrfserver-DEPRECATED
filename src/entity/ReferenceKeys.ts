@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn} from 'typeorm';
 import {reference_data} from "./ReferenceData";
 
 @Entity()
@@ -11,18 +11,21 @@ export class reference_keys {
   ref_data: reference_data[];
 
   @Column()
-  name: string;
+  short_name: string;
+
+  @Column()
+  long_name: string;
 
   @Column()
   is_active: boolean;
 
-  @Column()
+  @CreateDateColumn()
   created_on: Date;
 
   @Column()
   created_by: string;
 
-  @Column()
+  @CreateDateColumn()
   updated_on: Date;
 
   @Column()

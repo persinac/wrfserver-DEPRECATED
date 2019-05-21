@@ -2,28 +2,30 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  ManyToOne, JoinColumn
 } from 'typeorm';
-import { reference_keys } from './ReferenceKeys';
+import {question} from "./Question";
 
 @Entity()
-export class reference_data {
+export class question_options {
 
   @PrimaryGeneratedColumn()
-  rd_id: number;
+  qo_id: number;
 
-  @ManyToOne(() => reference_keys, (key: reference_keys) => key.rk_id)
+  @ManyToOne(() => question, (key: question) => key.q_id)
   @JoinColumn({
-    name: "rk_fk",
-    referencedColumnName: "rk_id",
+    name: "q_fk",
+    referencedColumnName: "q_id",
   })
-  rk_fk: number;
+  q_fk: number;
 
   @Column()
-  value: string;
+  text: string;
+
+  @Column()
+  sequence: number;
 
   @Column()
   is_active: boolean;

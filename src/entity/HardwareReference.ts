@@ -2,28 +2,24 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn
 } from 'typeorm';
-import { reference_keys } from './ReferenceKeys';
 
 @Entity()
-export class reference_data {
+export class hardware_reference_data {
 
   @PrimaryGeneratedColumn()
-  rd_id: number;
-
-  @ManyToOne(() => reference_keys, (key: reference_keys) => key.rk_id)
-  @JoinColumn({
-    name: "rk_fk",
-    referencedColumnName: "rk_id",
-  })
-  rk_fk: number;
+  hw_id: number;
 
   @Column()
-  value: string;
+  short_name: string;
+
+  @Column()
+  long_name: string;
+
+  @Column()
+  sku: string;
 
   @Column()
   is_active: boolean;
