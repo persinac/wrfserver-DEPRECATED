@@ -14,12 +14,12 @@ export class question_options {
   @PrimaryGeneratedColumn()
   qo_id: number;
 
-  @ManyToOne(() => question, (key: question) => key.q_id)
+  @ManyToOne(() => question, (key: question) => key.question_options)
   @JoinColumn({
     name: "q_fk",
     referencedColumnName: "q_id",
   })
-  q_fk: number;
+  question: question;
 
   @Column()
   text: string;

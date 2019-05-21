@@ -17,26 +17,26 @@ export class product_details {
   @PrimaryGeneratedColumn()
   pd_id: number;
 
-  @ManyToOne(type => product_header, product_header => product_header.ph_id)
+  @ManyToOne(() => product_header, (key: product_header) => key.product_details)
   @JoinColumn({
     name: "ph_fk",
     referencedColumnName: "ph_id",
   })
   ph: product_header;
 
-  @ManyToOne(() => category, (key: category) => key.category_id)
+  @ManyToOne(() => category, (key: category) => key.product_details)
   @JoinColumn({
     name: "cat_fk",
     referencedColumnName: "category_id",
   })
-  cat_fk: number;
+  category: category;
 
-  @ManyToOne(() => question, (key: question) => key.q_id)
+  @ManyToOne(() => question, (key: question) => key.product_details)
   @JoinColumn({
     name: "q_fk",
     referencedColumnName: "q_id",
   })
-  q_fk: number;
+  question: question;
 
   @Column()
   response: string;

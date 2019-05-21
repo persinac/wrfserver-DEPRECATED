@@ -15,12 +15,12 @@ export class reference_data {
   @PrimaryGeneratedColumn()
   rd_id: number;
 
-  @ManyToOne(() => reference_keys, (key: reference_keys) => key.rk_id)
+  @ManyToOne(() => reference_keys, (key: reference_keys) => key.ref_data)
   @JoinColumn({
     name: "rk_fk",
     referencedColumnName: "rk_id",
   })
-  rk_fk: number;
+  reference_keys: reference_keys;
 
   @Column()
   value: string;
