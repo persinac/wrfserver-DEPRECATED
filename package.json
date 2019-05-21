@@ -29,7 +29,9 @@
     "unit": "",
     "test": "",
     "lint": "",
-    "build": "tsc --outdir ./build"
+    "build": "tsc --outdir ./build",
+    "typeorm-DO-NOT-USE": "ts-node -r ./node_modules/.bin/typeorm ./node_modules/typeorm/cli.js -f ./ormconfig",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js -f ./ormconfig"
   },
   "dependencies": {
     "@types/express": "^4.16.1",
