@@ -7,7 +7,7 @@ export class customer {
   @PrimaryGeneratedColumn()
   customer_id: number;
 
-  @OneToMany(() => product_header, (product: product_header) => product.customer_fk)
+  @OneToMany(() => product_header, (product: product_header) => product.customer)
   product_header: product_header[];
 
   @Column()

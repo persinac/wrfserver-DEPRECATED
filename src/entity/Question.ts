@@ -17,9 +17,6 @@ export class question {
   @PrimaryGeneratedColumn()
   q_id: number;
 
-  @OneToMany(() => question_options, (qo: question_options) => qo.qo_id)
-  question_options: question_options[];
-
   @Column()
   text: string;
 
@@ -44,16 +41,6 @@ export class question {
   @Column()
   datatype: string;
 
-  @ManyToOne(() => category, (key: category) => key.category_id)
-  @JoinColumn({
-    name: "cat_fk",
-    referencedColumnName: "category_id",
-  })
-  cat_fk: number;
-
-  @OneToMany(() => product_details, (key: product_details) => key.pd_id)
-  product_details: product_details[];
-
   @Column()
   is_active: boolean;
 
@@ -68,4 +55,17 @@ export class question {
 
   @Column()
   updated_by: string;
+
+  @OneToMany(() => question_options, (qo: question_options) => qo.question)
+  question_options: question_options[];
+
+  @OneToMany(() => product_details, (pd: product_details) => pd.question)
+  product_details: product_details[];
+
+  @ManyToOne(() => category, (key: category) => key.question)
+  @JoinColumn({
+    name: "cat_fk",
+    referencedColumnName: "category_id",
+  })
+  category: category;
 }

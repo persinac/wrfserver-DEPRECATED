@@ -7,7 +7,7 @@ export class reference_keys {
   @PrimaryGeneratedColumn()
   rk_id: number;
 
-  @OneToMany(() => reference_data, (ref_data: reference_data) => ref_data.rk_fk)
+  @OneToMany(() => reference_data, (ref_data: reference_data) => ref_data.reference_keys)
   ref_data: reference_data[];
 
   @Column()

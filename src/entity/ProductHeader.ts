@@ -22,14 +22,14 @@ export class product_header {
     @Column()
     order_num: number;
 
-    @ManyToOne(() => customer, (key: customer) => key.customer_id)
+    @ManyToOne(() => customer, (key: customer) => key.product_header)
     @JoinColumn({
         name: "customer_fk",
         referencedColumnName: "customer_id",
     })
-    customer_fk: number;
+    customer: customer;
 
-    @OneToMany(type => product_details, product_details => product_details.pd_id)
+    @OneToMany(() => product_details, (key: product_details) => key.ph)
     product_details: product_details[];
 
     @Column()

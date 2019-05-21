@@ -1,24 +1,35 @@
 import {Request, Response} from "express";
 import { createConnection, Repository } from "typeorm";
 import { product_header } from "../entity/ProductHeader";
+import {category} from "../entity/Category";
 
 let repository: Repository<product_header>;
 
 export class Routes {
     public routes(app): void {
         createConnection().then(connection => {
-            console.log(connection);
             repository = connection.getRepository(product_header);
             app.route('/')
                 .get(async (req: Request, res: Response) => {
                     const phs = await repository.find();
                     res.send(phs);
                 });
-            // product
-            app.route('/product')
+            // localhost:8080/product/relationship/all
+            app.route('/product/relationship/all')
             // GET endpoint
                 .get(async (req: Request, res: Response) => {
-                    const phs = await repository.find({ relations: ["product_details"] });
+                    const phs = await repository.find({
+                        relations: [
+                          "product_details",
+                            "customer",
+                            "product_details.category",
+                            "product_details.question",
+                            "product_details.question.question_options"
+                        ],
+                        where: {
+                            ph_id: 1
+                        }
+                    });
                     res.send(phs);
                 })
                 // POST endpoint
