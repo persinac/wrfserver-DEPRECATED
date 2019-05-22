@@ -17,11 +17,9 @@ export class Routes {
             // product
             app.route('/product')
             // GET endpoint
-                .get((req: Request, res: Response) => {
-                    // Get all products
-                    res.status(200).send({
-                        message: 'GET all Products'
-                    })
+                .get(async (req: Request, res: Response) => {
+                    const phs = await repository.find();
+                    res.send(phs);
                 })
                 // POST endpoint
                 .post((req: Request, res: Response) => {
