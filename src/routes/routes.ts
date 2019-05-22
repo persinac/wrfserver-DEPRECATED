@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import { createConnection, Repository } from "typeorm";
 import { product_header } from "../entity/ProductHeader";
-import {category} from "../entity/Category";
 
 let repository: Repository<product_header>;
 
@@ -9,13 +8,18 @@ export class Routes {
     public routes(app): void {
         createConnection().then(connection => {
             repository = connection.getRepository(product_header);
-            app.route('/')
+            app.use(function(req, res, next) {
+              res.header("Access-Control-Allow-Origin", "*");
+              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+              next();
+            });
+            app.route('/api')
                 .get(async (req: Request, res: Response) => {
                     const phs = await repository.find();
                     res.send(phs);
                 });
             // localhost:8080/product/relationship/all
-            app.route('/product/relationship/all')
+            app.route('/api/product/relationship/all')
             // GET endpoint
                 .get(async (req: Request, res: Response) => {
                     const phs = await repository.find({
