@@ -13,13 +13,13 @@ export class Routes {
               res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
               next();
             });
-            app.route('/')
+            app.route('/api')
                 .get(async (req: Request, res: Response) => {
                     const phs = await repository.find();
                     res.send(phs);
                 });
             // localhost:8080/product/relationship/all
-            app.route('/product/relationship/all')
+            app.route('/api/product/relationship/all')
             // GET endpoint
                 .get(async (req: Request, res: Response) => {
                     const phs = await repository.find({
