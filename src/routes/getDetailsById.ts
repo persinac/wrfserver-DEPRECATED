@@ -14,9 +14,11 @@ export class getDetailsById {
                 .get(async (req: Request, res: Response) => {
                     const hellyea = await repository
                         .createQueryBuilder("productDetails")
-                        .select("productDetails.response")
-                        .where("productDetails.detail_id = detail_id", {
-                            detail_id: app.params.detail_id})
+                        //.select("productDetails.response")
+                        .where({
+                            pd_id: req.params.detailId
+                        }
+                        )
                         .getOne();
                     res.send(hellyea);
                 })

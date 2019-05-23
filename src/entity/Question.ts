@@ -1,35 +1,71 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn, OneToMany
+} from 'typeorm';
+import {category} from "./Category";
+import {question_options} from "./QuestionOptions";
+import {product_details} from "./ProductDetails";
 
 @Entity()
 export class question {
 
-    @PrimaryGeneratedColumn()
-    question_id: number;
+  @PrimaryGeneratedColumn()
+  q_id: number;
 
-    @Column()
-    question_text: string;
+  @Column()
+  text: string;
 
-    @Column()
-    questions_short_name: number;
+  @Column()
+  short_name: string;
 
-    @Column()
-    question_options_fk: number;
+  @Column({
+    default: ""
+  })
+  topic: string;
 
-    @Column()
-    category_id: number;
+  @Column({
+    default: ""
+  })
+  tooltip: string;
 
-    @Column()
-    topic: string;
+  @Column({
+    default: ""
+  })
+  instructions: string;
 
-    @Column()
-    tooltip: string;
+  @Column()
+  datatype: string;
 
-    @Column()
-    instructions: string;
+  @Column()
+  is_active: boolean;
 
-    @Column()
-    datatype: string;
+  @CreateDateColumn()
+  created_on: Date;
 
-    @Column()
-    is_active: boolean;
+  @Column()
+  created_by: string;
+
+  @UpdateDateColumn()
+  updated_on: Date;
+
+  @Column()
+  updated_by: string;
+
+  @OneToMany(() => question_options, (qo: question_options) => qo.question)
+  question_options: question_options[];
+
+  @OneToMany(() => product_details, (pd: product_details) => pd.question)
+  product_details: product_details[];
+
+  @ManyToOne(() => category, (key: category) => key.question)
+  @JoinColumn({
+    name: "cat_fk",
+    referencedColumnName: "category_id",
+  })
+  category: category;
 }

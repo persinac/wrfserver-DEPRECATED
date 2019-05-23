@@ -7,18 +7,33 @@ let repository: Repository<product_header>;
 export class Routes {
     public routes(app): void {
         createConnection().then(connection => {
-            console.log(connection);
             repository = connection.getRepository(product_header);
+            app.use(function(req, res, next) {
+              res.header("Access-Control-Allow-Origin", "*");
+              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+              next();
+            });
             app.route('/')
                 .get(async (req: Request, res: Response) => {
                     const phs = await repository.find();
                     res.send(phs);
                 });
-            // product
-            app.route('/product')
+            // localhost:8080/product/relationship/all
+            app.route('/product/relationship/all')
             // GET endpoint
                 .get(async (req: Request, res: Response) => {
-                    const phs = await repository.find();
+                    const phs = await repository.find({
+                        relations: [
+                          "product_details",
+                            "customer",
+                            "product_details.category",
+                            "product_details.question",
+                            "product_details.question.question_options"
+                        ],
+                        where: {
+                            ph_id: 1
+                        }
+                    });
                     res.send(phs);
                 })
                 // POST endpoint

@@ -1,23 +1,55 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn
+} from 'typeorm';
+import {product_header} from "./ProductHeader";
+import {category} from "./Category";
+import {question} from "./Question";
 
 @Entity()
 export class product_details {
 
-    @PrimaryGeneratedColumn()
-    detail_id: number;
+  @PrimaryGeneratedColumn()
+  pd_id: number;
 
-    @Column()
-    ph_id_fk: number;
+  @ManyToOne(() => product_header, (key: product_header) => key.product_details)
+  @JoinColumn({
+    name: "ph_fk",
+    referencedColumnName: "ph_id",
+  })
+  ph: product_header;
 
-    @Column()
-    group_id_fk: number;
+  @ManyToOne(() => category, (key: category) => key.product_details)
+  @JoinColumn({
+    name: "cat_fk",
+    referencedColumnName: "category_id",
+  })
+  category: category;
 
-    @Column()
-    category_id_fk: number;
+  @ManyToOne(() => question, (key: question) => key.product_details)
+  @JoinColumn({
+    name: "q_fk",
+    referencedColumnName: "q_id",
+  })
+  question: question;
 
-    @Column()
-    response: string;
+  @Column()
+  response: string;
 
-    @Column()
-    question_id_fk: number;
+  @CreateDateColumn()
+  created_on: Date;
+
+  @Column()
+  created_by: string;
+
+  @UpdateDateColumn()
+  updated_on: Date;
+
+  @Column()
+  updated_by: string;
 }

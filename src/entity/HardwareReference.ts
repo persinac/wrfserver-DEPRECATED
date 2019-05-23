@@ -3,29 +3,23 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne, JoinColumn
+  UpdateDateColumn
 } from 'typeorm';
-import {question} from "./Question";
 
 @Entity()
-export class question_options {
+export class hardware_reference_data {
 
   @PrimaryGeneratedColumn()
-  qo_id: number;
-
-  @ManyToOne(() => question, (key: question) => key.question_options)
-  @JoinColumn({
-    name: "q_fk",
-    referencedColumnName: "q_id",
-  })
-  question: question;
+  hw_id: number;
 
   @Column()
-  text: string;
+  short_name: string;
 
   @Column()
-  sequence: number;
+  long_name: string;
+
+  @Column()
+  sku: string;
 
   @Column()
   is_active: boolean;
