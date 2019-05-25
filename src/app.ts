@@ -1,25 +1,33 @@
 import express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from "./routes/routes";
-import {Catcalls} from "./routes/catcalls";
+import {CategoryRoutes} from "./routes/categoryRoutes";
 import {QuestionRoutes} from "./routes/questionRoutes";
 import {productDetailsRoutes} from "./routes/productDetailsRoutes";
 import {qoptionroutes} from "./routes/qoptionRoutes";
 import {userRoutes} from "./routes/userRoutes";
 import {userAccounts} from "./routes/userAccountRoutes";
-import {getDetailsById} from "./routes/getDetailsById";
+import {customer} from "./entity/Customer";
+import {CustomerRoutes} from "./routes/customerRoute";
+import {hardware_reference_data} from "./entity/HardwareReference";
+import {HardwareReferenceRoutes} from "./routes/hardwareReferenceRoutes";
+import {ReferenceDataRoutes} from "./routes/referenceDataRoutes";
+import {ReferenceKeysRoutes} from "./routes/referenceKeysRoutes";
 
 class App {
 
     public app: express.Application;
     public routePrv: Routes = new Routes();
-    public catcall: Catcalls = new Catcalls();
+    public catcall: CategoryRoutes = new CategoryRoutes();
     public question: QuestionRoutes = new QuestionRoutes()
     public productDetails: productDetailsRoutes = new productDetailsRoutes()
     public qoption: qoptionroutes = new qoptionroutes();
     public user: userRoutes = new userRoutes();
     public userAccount: userAccounts = new userAccounts();
-    public getDetails: getDetailsById = new getDetailsById();
+    public customer: CustomerRoutes = new CustomerRoutes();
+    public hardwareReference: HardwareReferenceRoutes = new HardwareReferenceRoutes()
+    public referenceData: ReferenceDataRoutes = new ReferenceDataRoutes();
+    public referenceKeys: ReferenceKeysRoutes = new ReferenceKeysRoutes();
 
     constructor() {
         this.app = express();
@@ -31,7 +39,10 @@ class App {
         this.qoption.qotionroute(this.app);
         this.user.userRoute(this.app);
         this.userAccount.userAccount(this.app);
-        this.getDetails.getDetailsId(this.app);
+        this.customer.customerRoute(this.app);
+        this.hardwareReference.HardwareReferenceRoute(this.app);
+        this.referenceData.referenceDataRoutes(this.app);
+        this.referenceKeys.referenceKeyRoutes(this.app);
     }
 
     private config(): void{

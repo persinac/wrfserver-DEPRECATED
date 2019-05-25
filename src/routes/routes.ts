@@ -47,11 +47,16 @@ export class Routes {
             // Product detail
             app.route('/product/:productId')
             // get specific product
-                .get((req: Request, res: Response) => {
-                    // Get a single product
-                    res.status(200).send({
-                        message: 'GET specific product'
-                    })
+                .get(async (req: Request, res: Response) => {
+                    const phs = await repository
+                        .createQueryBuilder("product")
+                        //.select("productDetails.response")
+                        .where({
+                                pd_id: req.params.productId
+                            }
+                        )
+                        .getOne();
+                    res.send(phs);
                 })
                 .put((req: Request, res: Response) => {
                     // Update a product
