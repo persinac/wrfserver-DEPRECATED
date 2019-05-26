@@ -46,13 +46,6 @@ export class ProductHeaders extends Routes {
           }
         });
         res.send(phs);
-      })
-      // POST endpoint
-      .post((req: Request, res: Response) => {
-        // Create new product
-        res.status(200).send({
-          message: 'POST new product'
-        })
       });
   }
 }

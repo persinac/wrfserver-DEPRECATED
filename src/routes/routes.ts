@@ -1,5 +1,5 @@
-import {Application, Request, Response} from "express";
-import {Connection, createConnection} from "typeorm";
+import {Application} from "express";
+import {Connection} from "typeorm";
 
 export abstract class Routes {
   protected app: Application;
@@ -19,31 +19,37 @@ export abstract class Routes {
     });
   }
 
-    public routes(app): void {
-        createConnection().then((connection: Connection)=> {
-            // Product detail
-            app.route('/product/:productId')
-            // get specific product
-                .get((req: Request, res: Response) => {
-                    // Get a single product
-                    res.status(200).send({
-                        message: 'GET specific product'
-                    })
-                })
-                .put((req: Request, res: Response) => {
-                    // Update a product
-                    res.status(200).send({
-                        message: 'Update product'
-                    })
-                })
-                .delete((req: Request, res: Response) => {
-                    // Delete a product
-                    res.status(200).send({
-                        message: 'DELETE product'
-                    })
-                })
-        });
-    }
+  // only saving this code for POST/PUT/DELETE example
+    // public routes(app): void {
+    //     createConnection().then((connection: Connection)=> {
+    //         // Product detail
+    //         app.route('/product/:productId')
+    //         // get specific product
+    //             .get(async (req: Request, res: Response) => {
+    //                 const phs = await repository
+    //                     .createQueryBuilder("product")
+    //                     //.select("productDetails.response")
+    //                     .where({
+    //                             pd_id: req.params.productId
+    //                         }
+    //                     )
+    //                     .getOne();
+    //                 res.send(phs);
+    //             })
+    //             .put((req: Request, res: Response) => {
+    //                 // Update a product
+    //                 res.status(200).send({
+    //                     message: 'Update product'
+    //                 })
+    //             })
+    //             .delete((req: Request, res: Response) => {
+    //                 // Delete a product
+    //                 res.status(200).send({
+    //                     message: 'DELETE product'
+    //                 })
+    //             })
+    //     });
+    // }
 
   abstract registerRoutes(): void;
   abstract setEndpoints(): void;

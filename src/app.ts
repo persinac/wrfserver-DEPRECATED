@@ -1,29 +1,37 @@
 import express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from "./routes/routes";
-import {Catcalls} from "./routes/catcalls";
+import {CategoryRoutes} from "./routes/categoryRoutes";
 import {QuestionRoutes} from "./routes/questionRoutes";
 import {productDetailsRoutes} from "./routes/productDetailsRoutes";
 import {qoptionroutes} from "./routes/qoptionRoutes";
 import {userRoutes} from "./routes/userRoutes";
 import {userAccounts} from "./routes/userAccountRoutes";
-import {getDetailsById} from "./routes/getDetailsById";
-import {ProductDetails} from "./routes/ProductDetails";
-import {OurTesterClass} from "./routes/OurTesterClass";
-import {ProductHeaders} from "./routes/ProductHeaders";
+import {customer} from "./entity/Customer";
+import {CustomerRoutes} from "./routes/customerRoute";
+import {hardware_reference_data} from "./entity/HardwareReference";
+import {HardwareReferenceRoutes} from "./routes/hardwareReferenceRoutes";
+import {ReferenceDataRoutes} from "./routes/referenceDataRoutes";
+import {ReferenceKeysRoutes} from "./routes/referenceKeysRoutes";
 import {Connection, createConnection} from "typeorm";
+import {ProductDetails} from "./routes/ProductDetails";
+import {ProductHeaders} from "./routes/ProductHeaders";
+import {OurTesterClass} from "./routes/OurTesterClass";
 
 class App {
 
     public app: express.Application;
-    public routePrv: Routes;
-    public catcall: Catcalls = new Catcalls();
-    public question: QuestionRoutes = new QuestionRoutes();
-    public productDetails: productDetailsRoutes = new productDetailsRoutes();
+    // public routePrv: Routes = new Routes();
+    public catcall: CategoryRoutes = new CategoryRoutes();
+    public question: QuestionRoutes = new QuestionRoutes()
+    public productDetails: productDetailsRoutes = new productDetailsRoutes()
     public qoption: qoptionroutes = new qoptionroutes();
     public user: userRoutes = new userRoutes();
     public userAccount: userAccounts = new userAccounts();
-    public getDetails: getDetailsById = new getDetailsById();
+    public customer: CustomerRoutes = new CustomerRoutes();
+    public hardwareReference: HardwareReferenceRoutes = new HardwareReferenceRoutes()
+    public referenceData: ReferenceDataRoutes = new ReferenceDataRoutes();
+    public referenceKeys: ReferenceKeysRoutes = new ReferenceKeysRoutes();
 
     private productDetailsTwo: ProductDetails;
     private productHeader: ProductHeaders;
@@ -35,13 +43,17 @@ class App {
     constructor() {
         this.app = express();
         this.config();
+        this.routePrv.routes(this.app);
         this.catcall.catcalls(this.app);
         this.question.questionRoutes(this.app);
         this.productDetails.productDetailsRoute(this.app);
         this.qoption.qotionroute(this.app);
         this.user.userRoute(this.app);
         this.userAccount.userAccount(this.app);
-        this.getDetails.getDetailsId(this.app);
+        this.customer.customerRoute(this.app);
+        this.hardwareReference.HardwareReferenceRoute(this.app);
+        this.referenceData.referenceDataRoutes(this.app);
+        this.referenceKeys.referenceKeyRoutes(this.app);
 
         createConnection().then((conn: Connection) => {
             this.productDetailsTwo = new ProductDetails(this.app, conn);
