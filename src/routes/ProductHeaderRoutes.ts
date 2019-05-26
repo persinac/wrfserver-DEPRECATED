@@ -1,7 +1,10 @@
 import {Application, Request, Response} from 'express';
 import {Connection, Repository} from 'typeorm';
+import {Customer} from '../entity/Customer';
 import {ProductHeader} from '../entity/ProductHeader';
-import {Endpoints} from '../Structure/Structures';
+import {CustomerModel} from '../model/CustomerModel';
+import {ProductHeaderModel} from '../model/ProductHeaderModel';
+import {Endpoints, IProductHeaderFields} from '../Structure/Structures';
 import {Routes} from './routes';
 
 export class ProductHeaderRoutes extends Routes {
@@ -19,15 +22,38 @@ export class ProductHeaderRoutes extends Routes {
 	}
 
 	public setEndpoints(): void {
-		this.endpoints['getAllProductHeader'] = '/';
+		this.endpoints['baseProduct'] = '/product';
+		this.endpoints['productById'] = '/product/:id';
 		this.endpoints['getAllProductHeaderRelationships'] = '/product/relationship/all';
 	}
 
 	public registerRoutes() {
-		this.app.route(this.endpoints['getAllProductHeader'])
+		this.app.route(this.endpoints['baseProduct'])
 			.get(async (req: Request, res: Response) => {
 				const phs = await this.repo.find();
 				res.send(phs);
+			})
+			.post(async (req: Request, res: Response) => {
+				const phf: IProductHeaderFields = req.body;
+				const cust = CustomerModel.createNewCustomer();
+				CustomerModel.saveNewCustomeor(cust, this.connection)
+					.then((newCustomer: Customer) => {
+						console.log(newCustomer);
+						phf.customer = newCustomer;
+						ProductHeaderModel.createNewProductHeader(phf, this.connection)
+							.then(() => {
+								res.status(200).send({
+									message: 'POST new product'
+								});
+							})
+							.catch((error) => {
+								const err = error.message;
+								res.status(400).send({ err });
+							});
+					}).catch((error) => {
+						const err = error.message;
+						res.status(400).send({ err });
+					});
 			});
 		this.app.route(this.endpoints['getAllProductHeaderRelationships'])
 		// GET endpoint
@@ -45,13 +71,46 @@ export class ProductHeaderRoutes extends Routes {
 					}
 				});
 				res.send(phs);
-			})
-			// POST endpoint
-			.post((req: Request, res: Response) => {
-				// Create new product
-				res.status(200).send({
-					message: 'POST new product'
-				});
 			});
+		this.app.route(this.endpoints['productById'])
+			.get(async (req: Request, res: Response) => {
+				console.log(req.params);
+				const hellyea = await this.repo
+					.createQueryBuilder('productHeader')
+					.where({
+							ph_id: req.params.id
+						}
+					)
+					.getOne();
+				res.send(hellyea);
+			})
+			.put(async (req: Request, res: Response) => {
+				this.repo.createQueryBuilder()
+					.update(ProductHeader)
+					.set(req.body)
+					.where('ph_id = :id', {id: req.params.id})
+					.execute()
+					.then(() => {
+						res.status(202).send({ message: 'Success!' });
+					})
+					.catch((error) => {
+						const err = error.message;
+						res.status(400).send({ err });
+					});
+			})
+			.delete(async (req: Request, res: Response) => {
+				const hellyea = await this.repo.find({
+					relations: [ 'product_details' ],
+					where: { ph_id: req.params.id }
+				});
+				ProductHeaderModel.removeProductHeader(hellyea[0], this.connection)
+					.then(() => {
+						res.status(202).send({ message: 'Success!' });
+					})
+					.catch((error) => {
+						const err = error.message;
+						res.status(400).send({ err });
+					});
+		});
 	}
 }

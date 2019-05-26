@@ -29,6 +29,7 @@
     "unit": "",
     "test": "",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
     "build": "lint && tsc --outdir ./build",
     "typeorm-DO-NOT-USE": "ts-node -r ./node_modules/.bin/typeorm ./node_modules/typeorm/cli.js -f ./ormconfig",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js -f ./ormconfig"
