@@ -1,35 +1,34 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
-import {product_header} from "./ProductHeader";
-import {product_details} from "./ProductDetails";
-import {question} from "./Question";
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {ProductDetails} from './ProductDetails';
+import {Question} from './Question';
 
-@Entity()
-export class category {
+@Entity({name: 'category'})
+export class Category {
 
-  @PrimaryGeneratedColumn()
-  category_id: number;
+	@PrimaryGeneratedColumn()
+	public category_id: number;
 
-  @Column()
-  category: string;
+	@Column()
+	public category: string;
 
-  @OneToMany(() => product_details, (product: product_details) => product.category)
-  product_details: product_details[];
+	@OneToMany(() => ProductDetails, (product: ProductDetails) => product.category)
+	public product_details: ProductDetails[];
 
-  @OneToMany(() => question, (q: question) => q.category)
-  question: question[];
+	@OneToMany(() => Question, (q: Question) => q.category)
+	public question: Question[];
 
-  @Column()
-  is_active: boolean;
+	@Column()
+	public is_active: boolean;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }

@@ -1,42 +1,42 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
-import { reference_keys } from './ReferenceKeys';
+import { ReferenceKeys } from './ReferenceKeys';
 
-@Entity()
-export class reference_data {
+@Entity({name: 'reference_data'})
+export class ReferenceData {
 
-  @PrimaryGeneratedColumn()
-  rd_id: number;
+	@PrimaryGeneratedColumn()
+	public rd_id: number;
 
-  @ManyToOne(() => reference_keys, (key: reference_keys) => key.ref_data)
-  @JoinColumn({
-    name: "rk_fk",
-    referencedColumnName: "rk_id",
-  })
-  reference_keys: reference_keys;
+	@ManyToOne(() => ReferenceKeys, (key: ReferenceKeys) => key.ref_data)
+	@JoinColumn({
+		name: 'rk_fk',
+		referencedColumnName: 'rk_id'
+	})
+	public reference_keys: ReferenceKeys;
 
-  @Column()
-  value: string;
+	@Column()
+	public value: string;
 
-  @Column()
-  is_active: boolean;
+	@Column()
+	public is_active: boolean;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }
