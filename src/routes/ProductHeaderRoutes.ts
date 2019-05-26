@@ -4,7 +4,7 @@ import {ProductHeader} from '../entity/ProductHeader';
 import {Endpoints} from '../Structure/Structures';
 import {Routes} from './routes';
 
-export class OurTesterClass extends Routes {
+export class ProductHeaderRoutes extends Routes {
 
 	public readonly endpoints: Endpoints[];
 
@@ -35,7 +35,7 @@ export class OurTesterClass extends Routes {
 				const phs = await this.repo.find({
 					relations: [
 						'product_details',
-						'Customer',
+						'customer',
 						'product_details.category',
 						'product_details.question',
 						'product_details.question.question_options'

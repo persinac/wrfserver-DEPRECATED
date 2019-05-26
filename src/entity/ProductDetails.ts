@@ -1,55 +1,55 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
-import {product_header} from "./ProductHeader";
-import {category} from "./Category";
-import {question} from "./Question";
+import {Category} from './Category';
+import {ProductHeader} from './ProductHeader';
+import {Question} from './Question';
 
-@Entity()
-export class product_details {
+@Entity({name: 'product_details'})
+export class ProductDetails {
 
-  @PrimaryGeneratedColumn()
-  pd_id: number;
+	@PrimaryGeneratedColumn()
+	public pd_id: number;
 
-  @ManyToOne(() => product_header, (key: product_header) => key.product_details)
-  @JoinColumn({
-    name: "ph_fk",
-    referencedColumnName: "ph_id",
-  })
-  ph: product_header;
+	@ManyToOne(() => ProductHeader, (key: ProductHeader) => key.product_details)
+	@JoinColumn({
+		name: 'ph_fk',
+		referencedColumnName: 'ph_id'
+	})
+	public ph: ProductHeader;
 
-  @ManyToOne(() => category, (key: category) => key.product_details)
-  @JoinColumn({
-    name: "cat_fk",
-    referencedColumnName: "category_id",
-  })
-  category: category;
+	@ManyToOne(() => Category, (key: Category) => key.product_details)
+	@JoinColumn({
+		name: 'cat_fk',
+		referencedColumnName: 'category_id'
+	})
+	public category: Category;
 
-  @ManyToOne(() => question, (key: question) => key.product_details)
-  @JoinColumn({
-    name: "q_fk",
-    referencedColumnName: "q_id",
-  })
-  question: question;
+	@ManyToOne(() => Question, (key: Question) => key.product_details)
+	@JoinColumn({
+		name: 'q_fk',
+		referencedColumnName: 'q_id'
+	})
+	public question: Question;
 
-  @Column()
-  response: string;
+	@Column()
+	public response: string;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }
