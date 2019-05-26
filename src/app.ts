@@ -43,7 +43,6 @@ class App {
     constructor() {
         this.app = express();
         this.config();
-        this.routePrv.routes(this.app);
         this.catcall.catcalls(this.app);
         this.question.questionRoutes(this.app);
         this.productDetails.productDetailsRoute(this.app);
