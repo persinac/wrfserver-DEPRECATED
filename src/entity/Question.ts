@@ -1,71 +1,72 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn, OneToMany
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
-import {category} from "./Category";
-import {question_options} from "./QuestionOptions";
-import {product_details} from "./ProductDetails";
+import {Category} from './Category';
+import {ProductDetails} from './ProductDetails';
+import {QuestionOptions} from './QuestionOptions';
 
-@Entity()
-export class question {
+@Entity({name: 'question'})
+export class Question {
 
-  @PrimaryGeneratedColumn()
-  q_id: number;
+	@PrimaryGeneratedColumn()
+	public q_id: number;
 
-  @Column()
-  text: string;
+	@Column()
+	public text: string;
 
-  @Column()
-  short_name: string;
+	@Column()
+	public short_name: string;
 
-  @Column({
-    default: ""
-  })
-  topic: string;
+	@Column({
+		default: ''
+	})
+	public topic: string;
 
-  @Column({
-    default: ""
-  })
-  tooltip: string;
+	@Column({
+		default: ''
+	})
+	public tooltip: string;
 
-  @Column({
-    default: ""
-  })
-  instructions: string;
+	@Column({
+		default: ''
+	})
+	public instructions: string;
 
-  @Column()
-  datatype: string;
+	@Column()
+	public datatype: string;
 
-  @Column()
-  is_active: boolean;
+	@Column()
+	public is_active: boolean;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 
-  @OneToMany(() => question_options, (qo: question_options) => qo.question)
-  question_options: question_options[];
+	@OneToMany(() => QuestionOptions, (qo: QuestionOptions) => qo.question)
+	public question_options: QuestionOptions[];
 
-  @OneToMany(() => product_details, (pd: product_details) => pd.question)
-  product_details: product_details[];
+	@OneToMany(() => ProductDetails, (pd: ProductDetails) => pd.question)
+	public product_details: ProductDetails[];
 
-  @ManyToOne(() => category, (key: category) => key.question)
-  @JoinColumn({
-    name: "cat_fk",
-    referencedColumnName: "category_id",
-  })
-  category: category;
+	@ManyToOne(() => Category, (key: Category) => key.question)
+	@JoinColumn({
+		name: 'cat_fk',
+		referencedColumnName: 'category_id'
+	})
+	public category: Category;
 }
