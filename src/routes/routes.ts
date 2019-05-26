@@ -1,49 +1,26 @@
-import {Request, Response} from "express";
-import { createConnection, Repository } from "typeorm";
-import { product_header } from "../entity/ProductHeader";
+import {Application, Request, Response} from "express";
+import {Connection, createConnection} from "typeorm";
 
-let repository: Repository<product_header>;
+export abstract class Routes {
+  protected app: Application;
+  protected connection: Connection;
 
-export class Routes {
+  protected constructor(application: Application, conn: Connection) {
+    this.app = application;
+    this.connection = conn;
+    this.setAppCORS();
+  }
+
+  public setAppCORS() {
+    this.app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
+  }
+
     public routes(app): void {
-        createConnection().then(connection => {
-            repository = connection.getRepository(product_header);
-            app.use(function(req, res, next) {
-              res.header("Access-Control-Allow-Origin", "*");
-              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-              next();
-            });
-            app.route('/')
-                .get(async (req: Request, res: Response) => {
-                    const phs = await repository.find();
-                    res.send(phs);
-                });
-            // localhost:8080/product/relationship/all
-            app.route('/product/relationship/all')
-            // GET endpoint
-                .get(async (req: Request, res: Response) => {
-                    const phs = await repository.find({
-                        relations: [
-                          "product_details",
-                            "customer",
-                            "product_details.category",
-                            "product_details.question",
-                            "product_details.question.question_options"
-                        ],
-                        where: {
-                            ph_id: 1
-                        }
-                    });
-                    res.send(phs);
-                })
-                // POST endpoint
-                .post((req: Request, res: Response) => {
-                    // Create new product
-                    res.status(200).send({
-                        message: 'POST new product'
-                    })
-                })
-
+        createConnection().then((connection: Connection)=> {
             // Product detail
             app.route('/product/:productId')
             // get specific product
@@ -67,21 +44,7 @@ export class Routes {
                 })
         });
     }
+
+  abstract registerRoutes(): void;
+  abstract setEndpoints(): void;
 }
-
-/*
-'use strict';
-module.exports = function(app) {
-  var sample = require('../controller/sample-controller');
-
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-
-app.route('/sample/:player').post(sample.getSampleByName);
-app.route('/sample/new/:player&:reporter').post(sample.createSample);
-app.route('/sample/list').get(sample.getAllSamples);
-};
- */

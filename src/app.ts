@@ -8,23 +8,33 @@ import {qoptionroutes} from "./routes/qoptionRoutes";
 import {userRoutes} from "./routes/userRoutes";
 import {userAccounts} from "./routes/userAccountRoutes";
 import {getDetailsById} from "./routes/getDetailsById";
+import {ProductDetails} from "./routes/ProductDetails";
+import {OurTesterClass} from "./routes/OurTesterClass";
+import {ProductHeaders} from "./routes/ProductHeaders";
+import {Connection, createConnection} from "typeorm";
 
 class App {
 
     public app: express.Application;
-    public routePrv: Routes = new Routes();
+    public routePrv: Routes;
     public catcall: Catcalls = new Catcalls();
-    public question: QuestionRoutes = new QuestionRoutes()
-    public productDetails: productDetailsRoutes = new productDetailsRoutes()
+    public question: QuestionRoutes = new QuestionRoutes();
+    public productDetails: productDetailsRoutes = new productDetailsRoutes();
     public qoption: qoptionroutes = new qoptionroutes();
     public user: userRoutes = new userRoutes();
     public userAccount: userAccounts = new userAccounts();
     public getDetails: getDetailsById = new getDetailsById();
 
+    private productDetailsTwo: ProductDetails;
+    private productHeader: ProductHeaders;
+
+
+    //Use this class to prototype
+    private ourTestClass: OurTesterClass;
+
     constructor() {
         this.app = express();
         this.config();
-        this.routePrv.routes(this.app);
         this.catcall.catcalls(this.app);
         this.question.questionRoutes(this.app);
         this.productDetails.productDetailsRoute(this.app);
@@ -32,6 +42,12 @@ class App {
         this.user.userRoute(this.app);
         this.userAccount.userAccount(this.app);
         this.getDetails.getDetailsId(this.app);
+
+        createConnection().then((conn: Connection) => {
+            this.productDetailsTwo = new ProductDetails(this.app, conn);
+            this.productHeader = new ProductHeaders(this.app, conn);
+            this.ourTestClass = new OurTesterClass(this.app, conn);
+        });
     }
 
     private config(): void{
