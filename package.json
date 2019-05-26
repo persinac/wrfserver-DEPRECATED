@@ -28,7 +28,7 @@
     "start": "npm run prod",
     "unit": "",
     "test": "",
-    "lint": "node-lint src/**/*.ts",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "build": "tsc --outdir ./build",
     "typeorm-DO-NOT-USE": "ts-node -r ./node_modules/.bin/typeorm ./node_modules/typeorm/cli.js -f ./ormconfig",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js -f ./ormconfig"
@@ -36,9 +36,11 @@
   "dependencies": {
     "@types/express": "^4.16.1",
     "@types/node": "^12.0.0",
+    "@types/pg": "^7.4.14",
     "express": "latest",
     "lint": "^1.1.2",
     "mysql": "^2.17.1",
+    "pg": "^7.11.0",
     "reflect-metadata": "^0.1.13",
     "ts-lint": "^4.5.1",
     "ts-node": "^8.1.0",
@@ -46,8 +48,13 @@
     "typescript": "^3.4.5"
   },
   "devDependencies": {
-    "ts-node": "^8.1.0",
-    "tslint-eslint-rules": "^5.4.0"
+    "@types/node": "^12.0.2",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.16.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.4.5",
+    "typescript-eslint-parser": "^22.0.0"
   },
   "engines": {
     "node": ">= 6.0.0",
