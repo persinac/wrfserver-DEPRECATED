@@ -1,9 +1,9 @@
 import {Application, Request, Response} from 'express';
 import {Connection, Repository} from 'typeorm';
+import {ProductDetailsController} from '../controller/ProductDetailsController';
+import {ProductHeaderController} from '../controller/ProductHeaderController';
 import {ProductDetails} from '../entity/ProductDetails';
 import {ProductHeader} from '../entity/ProductHeader';
-import {ProductDetailsModel} from '../model/ProductDetailsModel';
-import {ProductHeaderModel} from '../model/ProductHeaderModel';
 import {Endpoints} from '../Structure/Structures';
 import {Routes} from './routes';
 
@@ -24,7 +24,7 @@ export class ProductDetailsRoutes extends Routes {
 	public setEndpoints(): void {
 		this.endpoints['productDetailsByDetailId'] = '/product/details/detail/:id';
 		this.endpoints['productDetailsByProductId'] = '/product/details/:productId';
-		this.endpoints['createProductDetail'] = '/product/details/new/:productId';
+		this.endpoints['createProductDetail'] = '/product/details/new';
 	}
 
 	public registerRoutes(): void {
@@ -57,7 +57,7 @@ export class ProductDetailsRoutes extends Routes {
 						where: { pd_id: req.params.id }
 					})
 					.then((detail: ProductDetails[]) => {
-						ProductDetailsModel.removeProductDetails(detail[0], this.connection)
+						ProductDetailsController.removeProductDetails(detail[0], this.connection)
 							.then(() => {
 								res.status(202).send({ message: 'Success!' });
 							})
@@ -69,7 +69,8 @@ export class ProductDetailsRoutes extends Routes {
 			});
 		this.app.route(this.endpoints['createProductDetail'])
 			.post(async (req: Request, res: Response) => {
-				ProductDetailsModel.createNewProductDetails(this.connection)
+				console.log(req.body);
+				ProductDetailsController.createNewProductDetails(this.connection, req.body)
 					.then(() => {
 						res.status(201).send({ message: 'Success!' });
 					})
@@ -77,7 +78,6 @@ export class ProductDetailsRoutes extends Routes {
 						const err = error.message;
 						res.status(400).send({ err });
 					});
-
 			});
 	}
 }

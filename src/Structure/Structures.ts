@@ -14,3 +14,11 @@ export interface IProductHeaderFields {
 	created_by: string;
 	updated_by: string;
 }
+
+export interface ICategoryModel {
+	category_id: number;
+	category: string;
+	is_active: boolean;
+	created_by: string;
+	updated_by: string;
+}

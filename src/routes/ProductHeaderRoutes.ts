@@ -1,9 +1,9 @@
 import {Application, Request, Response} from 'express';
 import {Connection, Repository} from 'typeorm';
+import {CustomerController} from '../controller/CustomerController';
+import {ProductHeaderController} from '../controller/ProductHeaderController';
 import {Customer} from '../entity/Customer';
 import {ProductHeader} from '../entity/ProductHeader';
-import {CustomerModel} from '../model/CustomerModel';
-import {ProductHeaderModel} from '../model/ProductHeaderModel';
 import {Endpoints, IProductHeaderFields} from '../Structure/Structures';
 import {Routes} from './routes';
 
@@ -35,25 +35,39 @@ export class ProductHeaderRoutes extends Routes {
 			})
 			.post(async (req: Request, res: Response) => {
 				const phf: IProductHeaderFields = req.body;
-				const cust = CustomerModel.createNewCustomer();
-				CustomerModel.saveNewCustomeor(cust, this.connection)
-					.then((newCustomer: Customer) => {
-						console.log(newCustomer);
-						phf.customer = newCustomer;
-						ProductHeaderModel.createNewProductHeader(phf, this.connection)
-							.then(() => {
-								res.status(200).send({
-									message: 'POST new product'
+				// TODO: FIX THIS TERRIBLE IF CONDITION
+				if (phf.customer.customer_id) {
+					CustomerController.retrieveCustomerById(this.connection, phf.customer.customer_id)
+						.then((customer) => {
+							phf.customer = customer.toCustomer();
+							ProductHeaderController.createNewProductHeader(phf, this.connection)
+								.then((newProduct) => {
+									res.status(200).send({
+										message: 'Success!', newProduct
+									});
+								})
+								.catch((error) => {
+									const err = error.message;
+									res.status(400).send({ err });
 								});
-							})
-							.catch((error) => {
-								const err = error.message;
-								res.status(400).send({ err });
-							});
-					}).catch((error) => {
+						})
+						.catch((error) => {
 						const err = error.message;
 						res.status(400).send({ err });
 					});
+				} else {
+					phf.customer = await CustomerController.saveNewCustomer(phf.customer, this.connection);
+					ProductHeaderController.createNewProductHeader(phf, this.connection)
+						.then((newProduct) => {
+							res.status(200).send({
+								message: 'Success!', newProduct
+							});
+						})
+						.catch((error) => {
+							const err = error.message;
+							res.status(400).send({ err });
+						});
+				}
 			});
 		this.app.route(this.endpoints['getAllProductHeaderRelationships'])
 		// GET endpoint
@@ -67,7 +81,7 @@ export class ProductHeaderRoutes extends Routes {
 						'product_details.question.question_options'
 					],
 					where: {
-						ph_id: 1
+						ph_id: 3
 					}
 				});
 				res.send(phs);
@@ -103,7 +117,7 @@ export class ProductHeaderRoutes extends Routes {
 					relations: [ 'product_details' ],
 					where: { ph_id: req.params.id }
 				});
-				ProductHeaderModel.removeProductHeader(hellyea[0], this.connection)
+				ProductHeaderController.removeProductHeader(hellyea[0], this.connection)
 					.then(() => {
 						res.status(202).send({ message: 'Success!' });
 					})
