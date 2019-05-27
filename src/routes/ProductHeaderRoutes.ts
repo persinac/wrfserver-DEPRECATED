@@ -24,7 +24,7 @@ export class ProductHeaderRoutes extends Routes {
 	public setEndpoints(): void {
 		this.endpoints['baseProduct'] = '/product';
 		this.endpoints['productById'] = '/product/:id';
-		this.endpoints['getAllProductHeaderRelationships'] = '/product/relationship/all';
+		this.endpoints['getAllProductHeaderRelationships'] = '/product/relationship/all/:id';
 	}
 
 	public registerRoutes() {
@@ -81,7 +81,7 @@ export class ProductHeaderRoutes extends Routes {
 						'product_details.question.question_options'
 					],
 					where: {
-						ph_id: 3
+						ph_id: req.params.id
 					}
 				});
 				res.send(phs);
