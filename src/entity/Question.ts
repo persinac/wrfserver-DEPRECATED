@@ -69,4 +69,7 @@ export class Question {
 		referencedColumnName: 'category_id'
 	})
 	public category: Category;
+
+	@Column()
+	public cat_fk: string;
 }

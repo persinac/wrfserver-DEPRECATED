@@ -11,6 +11,16 @@ export class Category {
 	@Column()
 	public category: string;
 
+	@Column({
+		default: 1
+	})
+	public category_hierarchy: number;
+
+	@Column({
+		default: 99
+	})
+	public priority: number;
+
 	@OneToMany(() => ProductDetails, (product: ProductDetails) => product.category)
 	public product_details: ProductDetails[];
 
