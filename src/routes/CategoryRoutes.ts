@@ -15,14 +15,37 @@ export class CategoryRoutes {
 			});
 			app.route('/category')
 				.get(async (req: Request, res: Response) => {
-					const phs = await repository.find();
-					res.send(phs);
+					await repository
+						.createQueryBuilder('c')
+						.addOrderBy('c.category_hierarchy', 'ASC')
+						.addOrderBy('c.priority', 'ASC')
+						.getMany()
+						.then((cats) => {
+							res.status(200).send(cats);
+						})
+						.catch((err: any) => {
+							res.status(404).send(err);
+						});
 				});
 			app.route('/category/hierarchy/:id')
 				.get(async (req: Request, res: Response) => {
 					await repository
 						.createQueryBuilder('c')
 						.where({ category_hierarchy: req.params.id	})
+						.addOrderBy('c.priority', 'ASC')
+						.getMany()
+						.then((cats) => {
+							res.status(200).send(cats);
+						})
+						.catch((err: any) => {
+							res.status(404).send(err);
+						});
+				});
+			app.route('/category/belongs/:id')
+				.get(async (req: Request, res: Response) => {
+					await repository
+						.createQueryBuilder('c')
+						.where({ belongs_to: req.params.id	})
 						.addOrderBy('c.priority', 'ASC')
 						.getMany()
 						.then((cats) => {

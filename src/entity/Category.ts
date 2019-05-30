@@ -21,6 +21,11 @@ export class Category {
 	})
 	public priority: number;
 
+	@Column({
+		nullable: true
+	})
+	public belongs_to: number;
+
 	@OneToMany(() => ProductDetails, (product: ProductDetails) => product.category)
 	public product_details: ProductDetails[];
 
