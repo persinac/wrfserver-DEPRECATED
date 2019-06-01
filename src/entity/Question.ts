@@ -39,6 +39,11 @@ export class Question {
 	})
 	public instructions: string;
 
+	@Column({
+		default: 0
+	})
+	public grouping: number;
+
 	@Column()
 	public datatype: string;
 
