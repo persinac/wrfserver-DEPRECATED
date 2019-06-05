@@ -38,6 +38,18 @@ export class ProductHeader {
 	@Column()
 	public crafting_required: boolean;
 
+	@Column({
+		type: 'varchar',
+		length: 2000,
+		default: ''
+	})
+	public notes: string;
+
+	@Column({
+		default: ''
+	})
+	public reference_number: string;
+
 	@CreateDateColumn()
 	public created_on: Date;
 
