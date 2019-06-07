@@ -10,6 +10,8 @@ export interface IProductHeaderFields {
 	order_num: number;
 	customer: Customer;
 	status: string;
+	notes: string;
+	reference_number: string;
 	crafting_required: boolean;
 	created_by: string;
 	updated_by: string;

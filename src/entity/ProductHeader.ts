@@ -29,6 +29,9 @@ export class ProductHeader {
 	})
 	public customer: Customer;
 
+	@Column()
+	public customer_fk: number;
+
 	@OneToMany(() => ProductDetails, (key: ProductDetails) => key.ph)
 	public product_details: ProductDetails[];
 

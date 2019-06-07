@@ -64,6 +64,8 @@ export class ProductHeaderController extends ProductHeader {
 		ph.order_num = productHeaderFields.order_num;
 		ph.customer = productHeaderFields.customer;
 		ph.status = productHeaderFields.status;
+		ph.notes = productHeaderFields.notes;
+		ph.reference_number = productHeaderFields.reference_number;
 		ph.crafting_required = productHeaderFields.crafting_required;
 		ph.created_by = productHeaderFields.created_by;
 		ph.updated_by = productHeaderFields.updated_by;

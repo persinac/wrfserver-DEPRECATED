@@ -25,6 +25,7 @@ export class ProductDetailsRoutes extends Routes {
 		this.endpoints['productDetailsByDetailId'] = '/product/details/detail/:id';
 		this.endpoints['productDetailsByProductId'] = '/product/details/:productId';
 		this.endpoints['createProductDetail'] = '/product/details/new';
+		this.endpoints['upsertProductDetail'] = '/product/details';
 	}
 
 	public registerRoutes(): void {
@@ -73,6 +74,18 @@ export class ProductDetailsRoutes extends Routes {
 				ProductDetailsController.createNewProductDetails(this.connection, req.body)
 					.then(() => {
 						res.status(201).send({ message: 'Success!' });
+					})
+					.catch((error) => {
+						const err = error.message;
+						res.status(400).send({ err });
+					});
+			});
+		this.app.route(this.endpoints['upsertProductDetail'])
+			.put(async (req: Request, res: Response) => {
+				console.log(req.body);
+				ProductDetailsController.createNewProductDetails(this.connection, req.body)
+					.then((details) => {
+						res.status(200).send({ message: 'Success!', details });
 					})
 					.catch((error) => {
 						const err = error.message;

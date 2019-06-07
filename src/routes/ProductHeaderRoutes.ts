@@ -25,6 +25,7 @@ export class ProductHeaderRoutes extends Routes {
 		this.endpoints['baseProduct'] = '/product';
 		this.endpoints['productById'] = '/product/:id';
 		this.endpoints['getAllProductHeaderRelationships'] = '/product/relationship/all/:id';
+		this.endpoints['productForSalesEntry'] = '/product/sale/:id';
 	}
 
 	public registerRoutes() {
@@ -75,16 +76,13 @@ export class ProductHeaderRoutes extends Routes {
 				const phs = await this.repo.find({
 					relations: [
 						'product_details',
-						'customer',
-						'product_details.category',
-						'product_details.question',
-						'product_details.question.question_options'
+						'customer'
 					],
 					where: {
 						ph_id: req.params.id
 					}
 				});
-				res.send(phs);
+				res.send({phs});
 			});
 		this.app.route(this.endpoints['productById'])
 			.get(async (req: Request, res: Response) => {
@@ -126,5 +124,43 @@ export class ProductHeaderRoutes extends Routes {
 						res.status(400).send({ err });
 					});
 		});
+		this.app.route(this.endpoints['productForSalesEntry'])
+			.get(async (req: Request, res: Response) => {
+				console.log(req.params);
+				const hellyea = await this.repo
+					.find({
+						relations: [ 'product_details' ],
+						where: { ph_id: req.params.id }
+					});
+				res.send(hellyea);
+			})
+			.put(async (req: Request, res: Response) => {
+				this.repo.createQueryBuilder()
+					.update(ProductHeader)
+					.set(req.body)
+					.where('ph_id = :id', {id: req.params.id})
+					.execute()
+					.then(() => {
+						res.status(202).send({ message: 'Success!' });
+					})
+					.catch((error) => {
+						const err = error.message;
+						res.status(400).send({ err });
+					});
+			})
+			.delete(async (req: Request, res: Response) => {
+				const hellyea = await this.repo.find({
+					relations: [ 'product_details' ],
+					where: { ph_id: req.params.id }
+				});
+				ProductHeaderController.removeProductHeader(hellyea[0], this.connection)
+					.then(() => {
+						res.status(202).send({ message: 'Success!' });
+					})
+					.catch((error) => {
+						const err = error.message;
+						res.status(400).send({ err });
+					});
+			});
 	}
 }

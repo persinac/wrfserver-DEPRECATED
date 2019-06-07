@@ -24,6 +24,9 @@ export class ProductDetails {
 	})
 	public ph: ProductHeader;
 
+	@Column()
+	public ph_fk: number;
+
 	@ManyToOne(() => Category, (key: Category) => key.product_details)
 	@JoinColumn({
 		name: 'cat_fk',
@@ -31,12 +34,18 @@ export class ProductDetails {
 	})
 	public category: Category;
 
+	@Column()
+	public cat_fk: number;
+
 	@ManyToOne(() => Question, (key: Question) => key.product_details)
 	@JoinColumn({
 		name: 'q_fk',
 		referencedColumnName: 'q_id'
 	})
 	public question: Question;
+
+	@Column()
+	public q_fk: number;
 
 	@Column()
 	public response: string;
