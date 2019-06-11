@@ -1,33 +1,33 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn} from 'typeorm';
-import {reference_data} from "./ReferenceData";
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {ReferenceData} from './ReferenceData';
 
-@Entity()
-export class reference_keys {
+@Entity({name: 'reference_keys'})
+export class ReferenceKeys {
 
-  @PrimaryGeneratedColumn()
-  rk_id: number;
+	@PrimaryGeneratedColumn()
+	public rk_id: number;
 
-  @OneToMany(() => reference_data, (ref_data: reference_data) => ref_data.reference_keys)
-  ref_data: reference_data[];
+	@OneToMany(() => ReferenceData, (ref_data: ReferenceData) => ref_data.reference_keys)
+	public ref_data: ReferenceData[];
 
-  @Column()
-  short_name: string;
+	@Column()
+	public short_name: string;
 
-  @Column()
-  long_name: string;
+	@Column()
+	public long_name: string;
 
-  @Column()
-  is_active: boolean;
+	@Column()
+	public is_active: boolean;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @CreateDateColumn()
-  updated_on: Date;
+	@CreateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }

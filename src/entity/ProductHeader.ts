@@ -1,52 +1,67 @@
 import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
-    ManyToOne,
-    JoinColumn, OneToMany
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn, UpdateDateColumn
 } from 'typeorm';
-import {customer} from "./Customer";
-import {product_details} from "./ProductDetails";
+import {Customer} from './Customer';
+import {ProductDetails} from './ProductDetails';
 
-@Entity()
-export class product_header {
+@Entity({name: 'product_header'})
+export class ProductHeader {
 
-    @PrimaryGeneratedColumn()
-    ph_id: number;
+	@PrimaryGeneratedColumn()
+	public ph_id: number;
 
-    @Column()
-    group_id: number;
+	@Column()
+	public group_id: number;
 
-    @Column()
-    order_num: number;
+	@Column()
+	public order_num: number;
 
-    @ManyToOne(() => customer, (key: customer) => key.product_header)
-    @JoinColumn({
-        name: "customer_fk",
-        referencedColumnName: "customer_id",
-    })
-    customer: customer;
+	@ManyToOne(() => Customer, (key: Customer) => key.product_header)
+	@JoinColumn({
+		name: 'customer_fk',
+		referencedColumnName: 'customer_id'
+	})
+	public customer: Customer;
 
-    @OneToMany(() => product_details, (key: product_details) => key.ph)
-    product_details: product_details[];
+	@Column()
+	public customer_fk: number;
 
-    @Column()
-    status: string;
+	@OneToMany(() => ProductDetails, (key: ProductDetails) => key.ph)
+	public product_details: ProductDetails[];
 
-    @Column()
-    crafting_required: boolean;
+	@Column()
+	public status: string;
 
-    @CreateDateColumn()
-    created_on: Date;
+	@Column()
+	public crafting_required: boolean;
 
-    @Column()
-    created_by: string;
+	@Column({
+		type: 'varchar',
+		length: 2000,
+		default: ''
+	})
+	public notes: string;
 
-    @UpdateDateColumn()
-    updated_on: Date;
+	@Column({
+		default: ''
+	})
+	public reference_number: string;
 
-    @Column()
-    updated_by: string;
+	@CreateDateColumn()
+	public created_on: Date;
+
+	@Column()
+	public created_by: string;
+
+	@UpdateDateColumn()
+	public updated_on: Date;
+
+	@Column()
+	public updated_by: string;
 }

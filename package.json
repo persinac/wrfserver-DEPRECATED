@@ -23,13 +23,14 @@
   "scripts": {
     "ts-dev": "ts-node ./src/server.ts",
     "dev": "ts-node ./src/server.ts",
-    "prod": "ts-node ./src/server.ts",
-    "start-dev": "npm run dev",
+    "prod": "node ./build/server.js",
+    "start-dev": "npm run lint && npm run dev",
     "start": "npm run prod",
     "unit": "",
     "test": "",
-    "lint": "node-lint src/**/*.ts",
-    "build": "tsc --outdir ./build",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "build": "npm run lint && tsc --outdir ./build",
     "typeorm-DO-NOT-USE": "ts-node -r ./node_modules/.bin/typeorm ./node_modules/typeorm/cli.js -f ./ormconfig",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js -f ./ormconfig"
   },
@@ -45,11 +46,17 @@
     "ts-lint": "^4.5.1",
     "ts-node": "^8.1.0",
     "typeorm": "^0.2.17",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "body-parser": "latest"
   },
   "devDependencies": {
-    "ts-node": "^8.1.0",
-    "tslint-eslint-rules": "^5.4.0"
+    "@types/node": "^12.0.2",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.16.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.4.5",
+    "typescript-eslint-parser": "^22.0.0"
   },
   "engines": {
     "node": ">= 6.0.0",
