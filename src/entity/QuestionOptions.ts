@@ -1,44 +1,44 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne, JoinColumn
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn, UpdateDateColumn
 } from 'typeorm';
-import {question} from "./Question";
+import {Question} from './Question';
 
-@Entity()
-export class question_options {
+@Entity({name: 'question_options'})
+export class QuestionOptions {
 
-  @PrimaryGeneratedColumn()
-  qo_id: number;
+	@PrimaryGeneratedColumn()
+	public qo_id: number;
 
-  @ManyToOne(() => question, (key: question) => key.question_options)
-  @JoinColumn({
-    name: "q_fk",
-    referencedColumnName: "q_id",
-  })
-  question: question;
+	@ManyToOne(() => Question, (key: Question) => key.question_options)
+	@JoinColumn({
+		name: 'q_fk',
+		referencedColumnName: 'q_id'
+	})
+	public question: Question;
 
-  @Column()
-  text: string;
+	@Column()
+	public text: string;
 
-  @Column()
-  sequence: number;
+	@Column()
+	public sequence: number;
 
-  @Column()
-  is_active: boolean;
+	@Column()
+	public is_active: boolean;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }

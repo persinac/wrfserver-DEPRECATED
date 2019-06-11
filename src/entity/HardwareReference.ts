@@ -1,38 +1,38 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
 
-@Entity()
-export class hardware_reference_data {
+@Entity({name: 'hardware_reference_data'})
+export class HardwareReferenceData {
 
-  @PrimaryGeneratedColumn()
-  hw_id: number;
+	@PrimaryGeneratedColumn()
+	public hw_id: number;
 
-  @Column()
-  short_name: string;
+	@Column()
+	public short_name: string;
 
-  @Column()
-  long_name: string;
+	@Column()
+	public long_name: string;
 
-  @Column()
-  sku: string;
+	@Column()
+	public sku: string;
 
-  @Column()
-  is_active: boolean;
+	@Column()
+	public is_active: boolean;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }

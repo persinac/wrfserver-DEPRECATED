@@ -1,45 +1,45 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
-import {product_header} from "./ProductHeader";
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {ProductHeader} from './ProductHeader';
 
-@Entity()
-export class customer {
+@Entity({name: 'customer'})
+export class Customer {
 
-  @PrimaryGeneratedColumn()
-  customer_id: number;
+	@PrimaryGeneratedColumn()
+	public customer_id: number;
 
-  @OneToMany(() => product_header, (product: product_header) => product.customer)
-  product_header: product_header[];
+	@OneToMany(() => ProductHeader, (product: ProductHeader) => product.customer)
+	public product_header: ProductHeader[];
 
-  @Column()
-  name: string;
+	@Column()
+	public name: string;
 
-  @Column()
-  primary_email: string;
+	@Column()
+	public primary_email: string;
 
-  @Column({
-    default: ""
-  })
-  secondary_email: string;
+	@Column({
+		default: ''
+	})
+	public secondary_email: string;
 
-  @Column({
-    default: ""
-  })
-  phone_number: string;
+	@Column({
+		default: ''
+	})
+	public phone_number: string;
 
-  @Column({
-    default: ""
-  })
-  shipping_address: string;
+	@Column({
+		default: ''
+	})
+	public shipping_address: string;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@CreateDateColumn()
+	public created_on: Date;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public created_by: string;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@UpdateDateColumn()
+	public updated_on: Date;
 
-  @Column()
-  updated_by: string;
+	@Column()
+	public updated_by: string;
 }

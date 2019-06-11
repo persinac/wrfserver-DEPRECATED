@@ -1,55 +1,64 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
-import {product_header} from "./ProductHeader";
-import {category} from "./Category";
-import {question} from "./Question";
+import {Category} from './Category';
+import {ProductHeader} from './ProductHeader';
+import {Question} from './Question';
 
-@Entity()
-export class product_details {
+@Entity({name: 'product_details'})
+export class ProductDetails {
 
-  @PrimaryGeneratedColumn()
-  pd_id: number;
+	@PrimaryGeneratedColumn()
+	public pd_id: number;
 
-  @ManyToOne(() => product_header, (key: product_header) => key.product_details)
-  @JoinColumn({
-    name: "ph_fk",
-    referencedColumnName: "ph_id",
-  })
-  ph: product_header;
+	@ManyToOne(() => ProductHeader, (key: ProductHeader) => key.product_details)
+	@JoinColumn({
+		name: 'ph_fk',
+		referencedColumnName: 'ph_id'
+	})
+	public ph: ProductHeader;
 
-  @ManyToOne(() => category, (key: category) => key.product_details)
-  @JoinColumn({
-    name: "cat_fk",
-    referencedColumnName: "category_id",
-  })
-  category: category;
+	@Column()
+	public ph_fk: number;
 
-  @ManyToOne(() => question, (key: question) => key.product_details)
-  @JoinColumn({
-    name: "q_fk",
-    referencedColumnName: "q_id",
-  })
-  question: question;
+	@ManyToOne(() => Category, (key: Category) => key.product_details)
+	@JoinColumn({
+		name: 'cat_fk',
+		referencedColumnName: 'category_id'
+	})
+	public category: Category;
 
-  @Column()
-  response: string;
+	@Column()
+	public cat_fk: number;
 
-  @CreateDateColumn()
-  created_on: Date;
+	@ManyToOne(() => Question, (key: Question) => key.product_details)
+	@JoinColumn({
+		name: 'q_fk',
+		referencedColumnName: 'q_id'
+	})
+	public question: Question;
 
-  @Column()
-  created_by: string;
+	@Column()
+	public q_fk: number;
 
-  @UpdateDateColumn()
-  updated_on: Date;
+	@Column()
+	public response: string;
 
-  @Column()
-  updated_by: string;
+	@CreateDateColumn()
+	public created_on: Date;
+
+	@Column()
+	public created_by: string;
+
+	@UpdateDateColumn()
+	public updated_on: Date;
+
+	@Column()
+	public updated_by: string;
 }
