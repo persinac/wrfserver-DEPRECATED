@@ -27,4 +27,3 @@ export class AddUniqueDimToQuestion1560486436394 implements MigrationInterface {
  ('Width', 'cab_wdth_4', 'width', 'enter a width', '', 'number', 1, 'admin', 'admin', 10, 5, 'cab_4'),
  ('Height', 'cab_height_4', 'height', 'enter a height', '', 'number', 1, 'admin', 'admin', 10, 5, 'cab_4');
  ****/
- 
