@@ -17,6 +17,17 @@ export interface IProductHeaderFields {
 	updated_by: string;
 }
 
+export interface IQuestionOptions {
+	qo_id: number,
+	text: string,
+	sequence: number
+	is_active: boolean;
+	created_on: string;
+	created_by: string;
+	updated_on: string;
+	updated_by: string;
+}
+
 export interface ICategoryModel {
 	category_id: number;
 	category: string;

@@ -1,60 +1,45 @@
-import {Request, Response} from 'express';
-import {createConnection, Repository} from 'typeorm';
+import {Application, Request, Response} from 'express';
+import {Connection, Repository} from 'typeorm';
 import {Category} from '../entity/Category';
+import {Routes} from "./routes";
+import {Endpoints} from "../Structure/Structures";
 
-let repository: Repository<Category>;
+export class CategoryRoutes extends Routes {
 
-export class CategoryRoutes {
-	public categoryRoute(app): void {
-		createConnection().then((connection) => {
-			repository = connection.getRepository(Category);
-			app.use((req, res, next) => {
-				res.header('Access-Control-Allow-Origin', '*');
-				res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-				next();
-			});
-			app.route('/category')
-				.get(async (req: Request, res: Response) => {
-					await repository
-						.createQueryBuilder('c')
-						.addOrderBy('c.category_hierarchy', 'ASC')
-						.addOrderBy('c.priority', 'ASC')
-						.getMany()
-						.then((cats) => {
-							res.status(200).send(cats);
-						})
-						.catch((err: any) => {
-							res.status(404).send(err);
-						});
-				});
-			app.route('/category/hierarchy/:id')
-				.get(async (req: Request, res: Response) => {
-					await repository
-						.createQueryBuilder('c')
-						.where({ category_hierarchy: req.params.id	})
-						.addOrderBy('c.priority', 'ASC')
-						.getMany()
-						.then((cats) => {
-							res.status(200).send(cats);
-						})
-						.catch((err: any) => {
-							res.status(404).send(err);
-						});
-				});
-			app.route('/category/belongs/:id')
-				.get(async (req: Request, res: Response) => {
-					await repository
-						.createQueryBuilder('c')
-						.where({ belongs_to: req.params.id	})
-						.addOrderBy('c.priority', 'ASC')
-						.getMany()
-						.then((cats) => {
-							res.status(200).send(cats);
-						})
-						.catch((err: any) => {
-							res.status(404).send(err);
-						});
-				});
-		});
-	}
+  public readonly endpoints: Endpoints[];
+
+  private repo: Repository<Category>;
+
+  constructor(app: Application, conn: Connection) {
+    super(app, conn);
+    this.endpoints = [];
+    this.repo = conn.getRepository(Category);
+    this.setEndpoints();
+    this.registerRoutes();
+  }
+
+  public setEndpoints(): void {
+    this.endpoints['category'] = '/category';
+    this.endpoints['categoryById'] = '/category/:id';
+  }
+
+  public registerRoutes(): void {
+    this.app.route(this.endpoints['category'])
+      .get(async (req: Request, res: Response) => {
+        const phs = await this.repo.find();
+        res.send(phs);
+      });
+    this.app.route(this.endpoints['categoryById'])
+      .get(async (req: Request, res: Response) => {
+        const hellyea = await this.repo
+          .createQueryBuilder('category')
+          .where({
+              qo_id: req.params.id
+            }
+          )
+          .getOne();
+        res.send(hellyea);
+      })
+
+  }
 }

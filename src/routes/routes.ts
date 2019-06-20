@@ -5,7 +5,7 @@ export abstract class Routes {
 	protected app: Application;
 	protected connection: Connection;
 
-	protected constructor(application: Application, conn: Connection) {
+	constructor(application: Application, conn: Connection) {
 		this.app = application;
 		this.connection = conn;
 		this.setAppCORS();
