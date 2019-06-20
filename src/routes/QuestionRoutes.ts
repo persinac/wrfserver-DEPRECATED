@@ -16,7 +16,13 @@ export class QuestionRoutes {
 			});
 			app.route('/question')
 				.get(async (req: Request, res: Response) => {
-					const phs = await repository.find();
+					const phs = await repository
+						.createQueryBuilder('q')
+						.orderBy({
+							cat_fk: "ASC",
+							'q.grouping': "ASC"
+						})
+						.getMany();
 					res.send(phs);
 				});
 			app.route('/question/:id')

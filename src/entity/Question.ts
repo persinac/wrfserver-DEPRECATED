@@ -44,6 +44,11 @@ export class Question {
 	})
 	public grouping: number;
 
+	@Column({
+		default: ''
+	})
+	public unique_dim: string;
+
 	@Column()
 	public datatype: string;
 
