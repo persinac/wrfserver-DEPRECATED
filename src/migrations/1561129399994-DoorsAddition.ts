@@ -40,6 +40,12 @@ export class DoorsAddition1561129399994 implements MigrationInterface {
         await queryRunner.query(`
         delete from question where unique_dim in ('dr_2','dr_3','dr_4','dr_5','dr_6','dr_7','dr_8');
         `);
+        await queryRunner.query(`
+            update wrf.question set short_name = 'dr_qty' where short_name = 'dr_quantity';
+        `);
+        await queryRunner.query(`
+            update wrf.question set unique_dim = '' where short_name in ('dr_lngth', 'dr_wdth', 'dr_height');
+        `);
     }
 
 }
