@@ -33,9 +33,7 @@ export class AddRolloutDrawers1561483990823 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.query(`
-        delete from question where short_name like 'rodwr_^'
-        `);
+        await queryRunner.query(`delete from question where short_name like 'rodwr_%'`);
     }
 
 }
