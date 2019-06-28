@@ -23,7 +23,8 @@
   "scripts": {
     "ts-dev": "ts-node ./src/server.ts",
     "dev": "ts-node ./src/server.ts",
-    "prod": "node ./build/server.js",
+    "prod-tbd": "node ./build/server.js",
+    "prod": "ts-node ./src/server.ts",
     "start-dev": "npm run lint && npm run dev",
     "start": "npm run prod",
     "unit": "",
