@@ -18,6 +18,7 @@ export class QuestionRoutes {
 				.get(async (req: Request, res: Response) => {
 					const phs = await repository
 						.createQueryBuilder('q')
+						.where( {is_active: true})
 						.orderBy({
 							cat_fk: "ASC",
 							'q.grouping': "ASC"
