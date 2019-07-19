@@ -32,6 +32,20 @@ export class PricingMatrix {
 	})
 	public sell_price: Double;
 
+	@Column({
+		type: 'decimal',
+		precision: 2,
+		default: '0.00'
+	})
+	public special_door_sell_price: Double;
+
+	@Column({
+		type: 'decimal',
+		precision: 2,
+		default: '0.00'
+	})
+	public special_drawer_sell_price: Double;
+
 	@Column()
 	public is_active: boolean;
 
