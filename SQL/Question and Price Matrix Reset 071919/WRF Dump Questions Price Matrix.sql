@@ -13,5 +13,5 @@ ALTER TABLE wrf.product_header AUTO_INCREMENT = 1;
 delete from wrf.question where q_id > 0;
 ALTER TABLE wrf.question AUTO_INCREMENT = 1;
 -- reset ref_pricing_matrix
-delete from wrf.ref_pricing_matrix where q_id > 0;
+delete from wrf.ref_pricing_matrix where pm_id > 0;
 ALTER TABLE wrf.ref_pricing_matrix AUTO_INCREMENT = 1;
