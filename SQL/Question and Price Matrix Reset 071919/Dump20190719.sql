@@ -36,17 +36,17 @@ CREATE TABLE `ref_pricing_matrix` (
   `pm_id` int(11) NOT NULL AUTO_INCREMENT,
   `short_name` varchar(255) DEFAULT NULL,
   `sku` varchar(255) DEFAULT NULL,
-  `price` double(11,2) NOT NULL DEFAULT (0.00),
-  `sell_price` double(11,2) NOT NULL DEFAULT (0.00),
-  `special_door_sell_price` double(11,2) DEFAULT '0.00',
-  `special_drawer_sell_price` double(11,2) DEFAULT '0.00',
+  `price` double(11,2) NOT NULL DEFAULT 0.00,
+  `sell_price` double(11,2) NOT NULL DEFAULT 0.00,
   `is_active` tinyint(4) NOT NULL,
   `created_on` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `created_by` varchar(255) NOT NULL,
   `updated_on` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  `updated_by` varchar(255) NOT NULL
+  `updated_by` varchar(255) NOT NULL,
+  `special_door_sell_price` double(11,2) DEFAULT 0.00,
+  `special_drawer_sell_price` double(11,2) DEFAULT 0.00,
   PRIMARY KEY (`pm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
