@@ -10,6 +10,7 @@ import {QuestionRoutes} from './routes/QuestionRoutes';
 import { Routes } from './routes/routes';
 import {PricingMatrix} from "./entity/PricingMatrix";
 import {PricingMatrixRoutes} from "./routes/PricingMatrixRoutes";
+import {ProductPriceComponentRoutes} from "./routes/ProductPriceComponent";
 
 class App {
 
@@ -22,6 +23,7 @@ class App {
 	private productDetailsTwo: ProductDetailsRoutes;
 	private productHeader: ProductHeaderRoutes;
 	private priceMatrix: PricingMatrixRoutes;
+	private productPriceComponent: ProductPriceComponentRoutes;
 
 	// Use this class to prototype
 	private ourTestClass: OurTesterClass;
@@ -38,6 +40,7 @@ class App {
 			this.productHeader = new ProductHeaderRoutes(this.app, conn);
 			this.ourTestClass = new OurTesterClass(this.app, conn);
 			this.priceMatrix = new PricingMatrixRoutes(this.app, conn)
+			this.productPriceComponent = new ProductPriceComponentRoutes(this.app, conn)
 		});
 	}
 

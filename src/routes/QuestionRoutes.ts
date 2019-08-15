@@ -28,6 +28,7 @@ export class QuestionRoutes {
 				});
 			app.route('/question/:id')
 				.get(async (req: Request, res: Response) => {
+					console.log("question routes 1");
 					console.log(req.params);
 					const hellyea = await repository
 						.createQueryBuilder('q')

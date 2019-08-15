@@ -22,6 +22,7 @@ export class ProductDetailsController {
 		for (const detail of req) {
 			if (detail.pd_id === null || detail.pd_id === undefined) { await this.validateRequest(detail); }
 			console.log(req);
+			console.log("product details controller 1");
 			const pd = new ProductDetails();
 			const productHeader = await ProductHeaderController.retrieveProductHeaderById(conn, detail.ph_fk);
 			const category = await CategoryController.retrieveCategoryById(conn, detail.cat_fk);
