@@ -26,9 +26,10 @@ export class ProductPriceComponentRoutes extends Routes {
 	public registerRoutes(): void {
 		this.app.route(this.endpoints['productPrices'])
 			.get(async (req: Request, res: Response) => {
+				console.log(req.query);
 				await this.repo
 					.createQueryBuilder('ppc')
-					.where(`ppc.pd_id IN (${req.body['pd_ids']})`)
+					.where(`ppc.pd_id IN (${req.query['pd_ids']})`)
 					.getMany()
 					.then((price: ProductPriceComponent[]) => {
 						res.status(200).send(price);
