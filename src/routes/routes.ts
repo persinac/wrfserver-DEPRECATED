@@ -20,32 +20,6 @@ export abstract class Routes {
 		});
 	}
 
-	public routes(app): void {
-		createConnection().then((connection: Connection) => {
-			// Product detail
-			app.route('/product/:productId')
-			// get specific product
-				.get((req: Request, res: Response) => {
-					// Get a single product
-					res.status(200).send({
-						message: 'GET specific product'
-					});
-				})
-				.put((req: Request, res: Response) => {
-					// Update a product
-					res.status(200).send({
-						message: 'Update product'
-					});
-				})
-				.delete((req: Request, res: Response) => {
-					// Delete a product
-					res.status(200).send({
-						message: 'DELETE product'
-					});
-				});
-		});
-	}
-
 	public abstract registerRoutes(): void;
 	public abstract setEndpoints(): void;
 }

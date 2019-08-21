@@ -86,8 +86,6 @@ export class ProductHeaderRoutes extends Routes {
 			});
 		this.app.route(this.endpoints['productById'])
 			.get(async (req: Request, res: Response) => {
-				console.log(req.params);
-				console.log("product header routes 1");
 				const hellyea = await this.repo
 					.createQueryBuilder('productHeader')
 					.where({
@@ -98,7 +96,10 @@ export class ProductHeaderRoutes extends Routes {
 				res.send(hellyea);
 			})
 			.put(async (req: Request, res: Response) => {
-				this.repo.createQueryBuilder()
+				console.log("=========== HELLO ===========");
+				console.log(req.params);
+				console.log(req.body);
+				await this.repo.createQueryBuilder()
 					.update(ProductHeader)
 					.set(req.body)
 					.where('ph_id = :id', {id: req.params.id})
@@ -127,8 +128,6 @@ export class ProductHeaderRoutes extends Routes {
 		});
 		this.app.route(this.endpoints['productForSalesEntry'])
 			.get(async (req: Request, res: Response) => {
-				console.log(req.params);
-				console.log("product header routes 2");
 				const hellyea = await this.repo
 					.find({
 						relations: [ 'product_details' ],
@@ -137,6 +136,8 @@ export class ProductHeaderRoutes extends Routes {
 				res.send(hellyea);
 			})
 			.put(async (req: Request, res: Response) => {
+				console.log(req.params);
+				console.log(req.body);
 				this.repo.createQueryBuilder()
 					.update(ProductHeader)
 					.set(req.body)

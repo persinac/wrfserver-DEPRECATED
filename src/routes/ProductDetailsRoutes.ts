@@ -70,8 +70,6 @@ export class ProductDetailsRoutes extends Routes {
 			});
 		this.app.route(this.endpoints['createProductDetail'])
 			.post(async (req: Request, res: Response) => {
-				console.log("product details routes 1");
-				console.log(req.body);
 				ProductDetailsController.createNewProductDetails(this.connection, req.body)
 					.then(() => {
 						res.status(201).send({ message: 'Success!' });
@@ -83,8 +81,6 @@ export class ProductDetailsRoutes extends Routes {
 			});
 		this.app.route(this.endpoints['upsertProductDetail'])
 			.put(async (req: Request, res: Response) => {
-				console.log("product details routes 2");
-				console.log(req.body);
 				ProductDetailsController.createNewProductDetails(this.connection, req.body)
 					.then((details) => {
 						res.status(200).send({ message: 'Success!', details });

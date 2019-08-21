@@ -7,15 +7,12 @@ import {ProductDetailsRoutes} from './routes/ProductDetailsRoutes';
 import {ProductHeaderRoutes} from './routes/ProductHeaderRoutes';
 import {QuestionOptionRoutes} from './routes/questionOptionRoutes';
 import {QuestionRoutes} from './routes/QuestionRoutes';
-import { Routes } from './routes/routes';
-import {PricingMatrix} from "./entity/PricingMatrix";
 import {PricingMatrixRoutes} from "./routes/PricingMatrixRoutes";
 import {ProductPriceComponentRoutes} from "./routes/ProductPriceComponent";
 
 class App {
 
 	public app: express.Application;
-	public routePrv: Routes;
 	public qoption: QuestionOptionRoutes = new QuestionOptionRoutes();
 	public question: QuestionRoutes = new QuestionRoutes();
 	public category: CategoryRoutes = new CategoryRoutes();
@@ -39,8 +36,8 @@ class App {
 			this.productDetailsTwo = new ProductDetailsRoutes(this.app, conn);
 			this.productHeader = new ProductHeaderRoutes(this.app, conn);
 			this.ourTestClass = new OurTesterClass(this.app, conn);
-			this.priceMatrix = new PricingMatrixRoutes(this.app, conn)
-			this.productPriceComponent = new ProductPriceComponentRoutes(this.app, conn)
+			this.priceMatrix = new PricingMatrixRoutes(this.app, conn);
+			this.productPriceComponent = new ProductPriceComponentRoutes(this.app, conn);
 		});
 	}
 
