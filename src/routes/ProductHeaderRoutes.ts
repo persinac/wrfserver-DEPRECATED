@@ -96,9 +96,6 @@ export class ProductHeaderRoutes extends Routes {
 				res.send(hellyea);
 			})
 			.put(async (req: Request, res: Response) => {
-				console.log("=========== HELLO ===========");
-				console.log(req.params);
-				console.log(req.body);
 				await this.repo.createQueryBuilder()
 					.update(ProductHeader)
 					.set(req.body)
@@ -136,8 +133,6 @@ export class ProductHeaderRoutes extends Routes {
 				res.send(hellyea);
 			})
 			.put(async (req: Request, res: Response) => {
-				console.log(req.params);
-				console.log(req.body);
 				this.repo.createQueryBuilder()
 					.update(ProductHeader)
 					.set(req.body)

@@ -26,13 +26,13 @@ export class ProductPriceComponentRoutes extends Routes {
 	public registerRoutes(): void {
 		this.app.route(this.endpoints['productPrices'])
 			.get(async (req: Request, res: Response) => {
-				await this.repo
-					.createQueryBuilder('ppc')
-					.where(`ppc.pd_id IN (${req.query['pd_ids']})`)
-					.getMany()
-					.then((price: ProductPriceComponent[]) => {
-						res.status(200).send(price);
-					});
+					await this.repo
+						.createQueryBuilder('ppc')
+						.where(`ppc.pd_id IN (${req.query['pd_ids']})`)
+						.getMany()
+						.then((price: ProductPriceComponent[]) => {
+							res.status(200).send(price);
+						});
 			})
 			.post(async (req: Request, res: Response) => {
 				this.repo
